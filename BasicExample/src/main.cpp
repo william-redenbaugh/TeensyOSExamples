@@ -13,19 +13,9 @@
 // Message management stuff
 #include "MODULES/PROTOCALLBACKS/teensy_coms.h"
 
-const int LED = 13;
-bool en = true; 
-
-void msg_callback(MessageReq *msg){
-  if(en){
-    en = false; 
-    digitalWrite(LED_BUILTIN, HIGH);
-  }
-  else{
-    en = true; 
-    digitalWrite(LED_BUILTIN, LOW);
-  }
-}
+#define RED_GPIO   2
+#define GREEN_GPIO 3
+#define BLUE_GPIO  4
 
 void setup() {
   // Macro that initializes the primary thread. 
@@ -35,11 +25,20 @@ void setup() {
   // Starts up the OS managed serial interface. 
   os_usb_serial_begin();
   
-  pinMode(LED_BUILTIN, OUTPUT);
-  //digitalWrite(LED_BUILTIN, HIGH);
 
+  analogWriteResolution(12); 
+  pinMode(2, OUTPUT); 
+  pinMode(3, OUTPUT); 
+  pinMode(4, OUTPUT); 
+  analogWriteFrequency(2, 36621.09);
+  analogWriteFrequency(3, 36621.09);
+  analogWriteFrequency(4, 36621.09);
+
+  analogWrite(2, 100);
+  analogWrite(3, 100); 
+  analogWrite(4, 100);
+  
   message_callbacks_begin();  
-  add_message_callback(MessageData_MessageType_STATUS_DATA, msg_callback);
 }
 
 void loop() {
