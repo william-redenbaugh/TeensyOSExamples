@@ -4,7 +4,7 @@
 *   @brief The rgb values that 
 */
 static RgbColor rgb_val; 
-static uint8_t brightness = 4; 
+static uint8_t brightness = 3; 
 
 static inline void setup_pwm_pin(int pin); 
 void setup_rgb_led_gpio(void); 
@@ -13,8 +13,7 @@ void set_main_rgb_value(uint8_t r, uint8_t g, uint8_t b);
 void set_brighness(uint8_t b);
 RgbColor get_main_rgb_value(void);
 HsvColor get_main_hsv_value(void); 
-static inline uint8_t max_value(uint8_t a, uint8_t b, uint8_t c); 
-void fade_main_hsv(HsvColor col, uint8_t increment_amount); 
+void set_main_rgb_kelvin(uint32_t kelvin); 
 
 /*!
 *   @brief Tiny little helper function that makes code a little easier to understand.
@@ -70,14 +69,14 @@ void set_main_rgb_value_hsv(HsvColor hsv){
 */
 void set_main_rgb_value(uint8_t r, uint8_t g, uint8_t b){
     // Save our RGB values. 
-    rgb_val.r = r * brightness; 
-    rgb_val.g = g * brightness; 
-    rgb_val.b = b * brightness;
+    rgb_val.r = r; 
+    rgb_val.g = g; 
+    rgb_val.b = b;
 
     // Drive the proper RGB LED values 
-    analogWrite(RED_LED_GPIO, r); 
-    analogWrite(GREEN_LED_GPIO, g); 
-    analogWrite(BLUE_LED_GPIO, b); 
+    analogWrite(RED_LED_GPIO, r * brightness); 
+    analogWrite(GREEN_LED_GPIO, g * brightness); 
+    analogWrite(BLUE_LED_GPIO, b * brightness); 
 }
 
 /*!
@@ -108,66 +107,71 @@ HsvColor get_main_hsv_value(void){
 }
 
 /*!
-*   @brief Finding the largest possible value 
-*   @note Just a helper function that helps us deal with coloring stuff
-*   @return uint8_t maximum value 
-*   @param uint8_t a
-*   @param uint8_t b
-*   @param uint8_t b
+*   @brief Sets the big RGB LED to a particular Kelvin value. 
+*   @param uint32_t kelvin in degrees. 
 */
-static inline uint8_t max_value(uint8_t a, uint8_t b, uint8_t c){
-    if(a >= b)
-        // A is greater or equal value to b or c
-        if(a >= c)
-            return a; 
-    else
-        // B is greate or equal value to a or c
-        if(b >= c)
-            return b;
+void set_main_rgb_kelvin(uint32_t kelvin){
+    double adj_temp = kelvin/100;
+    uint8_t red; 
+    uint8_t blue; 
+    uint8_t green; 
 
-    // Since a and b were not as large as b, we return c
-    return c; 
-}
-
-/*!
-*   @brief Allows us to fade the hsv color by a certain amount
-*   @param HsvColor col(color we want to fade to )
-*   @param uint8_t increment amount(how fast we want to fade based of 100fps animation)
-*/
-void fade_main_hsv(HsvColor col, uint8_t increment_amount){
-    HsvColor prev_col = RgbToHsv(rgb_val); 
-    while(1){
-        int x = 0; 
-
-        if(abs(prev_col.h - col.h) > increment_amount){
-            prev_col.h = prev_col.h + increment_amount; 
-        }
-        else{
-            prev_col.h = col.h;
-            x++; 
-        }
-
-        if(abs(prev_col.s - col.s) > increment_amount){
-            prev_col.s = prev_col.s + increment_amount; 
-        }
-        else{
-            prev_col.s = col.s;
-            x++; 
-        }
-
-        if(abs(prev_col.v - col.v) > increment_amount){
-            prev_col.v = prev_col.v + increment_amount; 
-        }
-        else{
-            prev_col.v = col.v; 
-            x++;     
-        }
-        
-        if(x == 3)
-            break; 
-
-        // Set the color value 
-        set_main_rgb_value_hsv(prev_col);
-        os_thread_delay_ms(RGB_LED_FRAME_TIME); 
+    // first we need to deal with the Red calculation!
+    // red_cutoff!
+    if(adj_temp <= 66){
+    red = 255;     
     }
+    // some mathematical calculations!
+    else{
+        double adj_red = (adj_temp  - 60); 
+        adj_red = 329.698727446 * (pow(adj_red, -0.1332047592));
+
+        if(adj_red > 255)
+            adj_red = 255;   
+        if(adj_red < 0)
+            adj_red = 0; 
+            
+        red = uint8_t(adj_red);
+    }
+
+    // calulcate green
+    double adj_green; 
+
+    if(adj_temp <= 66){
+        adj_green = adj_temp;
+        adj_green = ((log(adj_green)) * 99.4708025861) - 161.1195681661;
+    }
+    else{
+        adj_green = adj_temp - 60;
+        adj_green = 288.1221695283 * (pow(adj_green, -0.0755148492));
+    }
+    // more math and simple logic here!
+    if(adj_green > 255)
+        adj_green = 255;   
+    
+    if(adj_green < 0)
+        adj_green = 0;   
+    
+    green = uint8_t(adj_green);
+
+    if(adj_temp >= 66)
+        blue = 255; 
+    else{
+        // finishing math and computer logic here...
+        if(adj_temp <= 19){
+            blue = 0;   
+        }  
+        else{
+            double adj_blue = adj_temp - 10; 
+            adj_blue = ((log(adj_blue))  * 138.5177312231) - 305.0447927307;
+            if(adj_blue > 255){
+                adj_blue = 255;   
+            }
+            if(adj_blue < 0){
+                adj_blue = 0;   
+            }
+            blue = uint8_t(adj_blue);
+        }
+    }
+    set_main_rgb_value(red, green, blue); 
 }

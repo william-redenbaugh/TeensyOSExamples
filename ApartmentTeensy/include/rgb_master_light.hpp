@@ -20,13 +20,13 @@
 #include "hsv_rgb_conv.hpp"
 
 #define RED_LED_GPIO   2
-#define GREEN_LED_GPIO 3
-#define BLUE_LED_GPIO  4
+#define GREEN_LED_GPIO 4
+#define BLUE_LED_GPIO  3
 
 /*!
 *   @brief The speed that we want RGB animations to go at
 */
-#define RGB_LED_FRAMERATE 100
+#define RGB_LED_FRAMERATE 30
 
 /*!
 *   @brief The amount of time in MS that each RGB LED frame takes 
@@ -40,6 +40,6 @@ void set_main_rgb_value(uint8_t r, uint8_t g, uint8_t b);
 void set_brighness(uint8_t b);
 RgbColor get_main_rgb_value(void);
 HsvColor get_main_hsv_value(void);
-void fade_main_hsv(HsvColor col, uint8_t increment_amount);  
+void set_main_rgb_kelvin(uint32_t kelvin); 
 
 #endif 
