@@ -16,9 +16,11 @@
 #include "messagedata.pb.h"
 #include "relay_msg.pb.h"
 #include "temp_hum.pb.h"
+#include "led_strip_data.pb.h"
 
 MessageData unpack_message_data(uint8_t *arr, uint32_t len);
 TempuratureHumidityMessage unpack_temp_humd_data(uint8_t *arr, uint32_t len); 
 RelayMessage unpack_relay_msg(uint8_t *arr, uint32_t len);
+LEDData unpack_led_data(uint8_t *arr, uint32_t len); 
 
 #endif 

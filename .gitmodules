@@ -1,9 +1,3 @@
 [submodule "BasicExample/lib/TeensyOS"]
 	path = BasicExample/lib/TeensyOS
 	url = git@github.com:william-redenbaugh/TeensyOS.git
-[submodule "BasicExample/lib/SmartMatrix"]
-	path = BasicExample/lib/SmartMatrix
-	url = git@github.com:pixelmatix/SmartMatrix.git
-[submodule "BasicExample/lib/FlexIO_t4"]
-	path = BasicExample/lib/FlexIO_t4
-	url = git@github.com:KurtE/FlexIO_t4.git
