@@ -13,9 +13,7 @@
 // Message management stuff
 #include "MODULES/PROTOCALLBACKS/teensy_coms.h"
 
-#define RED_GPIO   2
-#define GREEN_GPIO 3
-#define BLUE_GPIO  4
+#include "rgb_runtime_thread.hpp"
 
 void setup() {
   // Macro that initializes the primary thread. 
@@ -24,21 +22,10 @@ void setup() {
   setup_lwip_thread();
   // Starts up the OS managed serial interface. 
   os_usb_serial_begin();
-  
-
-  analogWriteResolution(12); 
-  pinMode(2, OUTPUT); 
-  pinMode(3, OUTPUT); 
-  pinMode(4, OUTPUT); 
-  analogWriteFrequency(2, 36621.09);
-  analogWriteFrequency(3, 36621.09);
-  analogWriteFrequency(4, 36621.09);
-
-  analogWrite(2, 100);
-  analogWrite(3, 100); 
-  analogWrite(4, 100);
-  
+  // Sets up our message callback thread  
   message_callbacks_begin();  
+  // Sets up our rgb runtime environment 
+  start_rgb_runtime_thread(); 
 }
 
 void loop() {
