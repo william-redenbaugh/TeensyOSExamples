@@ -1,3 +1,6 @@
 [submodule "BasicExample/lib/TeensyOS"]
 	path = BasicExample/lib/TeensyOS
 	url = git@github.com:william-redenbaugh/TeensyOS.git
+[submodule "TeensyOSTesting/lib/TeensyOS"]
+	path = TeensyOSTesting/lib/TeensyOS
+	url = git@github.com:william-redenbaugh/TeensyOS.git
