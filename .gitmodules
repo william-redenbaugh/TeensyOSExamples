@@ -4,3 +4,6 @@
 [submodule "TeensyOSTesting/lib/TeensyOS"]
 	path = TeensyOSTesting/lib/TeensyOS
 	url = git@github.com:william-redenbaugh/TeensyOS.git
+[submodule "TeensyOSTesting/src/ArduinoCHAL"]
+	path = TeensyOSTesting/src/ArduinoCHAL
+	url = git@github.com:william-redenbaugh/ArduinoCHAL.git
