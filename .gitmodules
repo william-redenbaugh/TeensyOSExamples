@@ -4,12 +4,15 @@
 [submodule "TeensyOSTesting/lib/TeensyOS"]
 	path = TeensyOSTesting/lib/TeensyOS
 	url = git@github.com:william-redenbaugh/TeensyOS.git
-[submodule "TeensyOSTesting/src/ArduinoCHAL"]
-	path = TeensyOSTesting/src/ArduinoCHAL
-	url = git@github.com:william-redenbaugh/ArduinoCHAL.git
 [submodule "TeensyOSTesting/src/CSAL_SHARED"]
 	path = TeensyOSTesting/src/CSAL_SHARED
 	url = git@github.com:william-redenbaugh/CSAL_SHARED.git
 [submodule "TeensyOSTesting/src/CHAL_SHARED"]
 	path = TeensyOSTesting/src/CHAL_SHARED
 	url = git@github.com:william-redenbaugh/CHAL_SHARED.git
+[submodule "TeensyOSTesting/src/ArduinoCHAL"]
+	path = TeensyOSTesting/src/ArduinoCHAL
+	url = git@github.com:william-redenbaugh/ArduinoCHAL.git
+[submodule "TeensyOSTesting/src/TeensyOSCSAL"]
+	path = TeensyOSTesting/src/TeensyOSCSAL
+	url = git@github.com:william-redenbaugh/TeensyOSCSAL.git
