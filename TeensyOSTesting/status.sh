@@ -1,0 +1,10 @@
+git status
+cd src/ArduinoCHAL/
+git status
+cd ../CHAL_SHARED/
+git status 
+cd ../TeensyOSCSAL/
+git status
+cd ../CSAL_SHARED/
+git status
+cd ../..

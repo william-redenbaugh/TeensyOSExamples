@@ -1,0 +1,10 @@
+git pull
+cd src/ArduinoCHAL/
+git pull
+cd ../CHAL_SHARED/
+git pull 
+cd ../TeensyOSCSAL/
+git pull
+cd ../CSAL_SHARED/
+git pull
+cd ../..
