@@ -1,0 +1,27 @@
+{
+    "CHAL_SHARED": {
+        "dir": "src/CHAL_SHARED",
+        "link": "",
+        "branch": "main"
+    },
+    "CSAL_SHARED": {
+        "dir": "src/CSAL_SHARED",
+        "link": "",
+        "branch": "main"
+    },
+    "TeensyOSCSAL": {
+        "dir": "src/TeensyOSCSAL",
+        "link": "",
+        "branch": "main"
+    },
+    "ArduinoCHAL": {
+        "dir": "src/ArduinoCHAL",
+        "link": "",
+        "branch": "main"
+    },
+    "TeensyOSTesting": {
+        "dir": "",
+        "link": "",
+        "branch": "main"
+    }
+}
